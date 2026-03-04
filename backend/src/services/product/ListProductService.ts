@@ -7,6 +7,7 @@ class ListProductService {
                 id: true,
                 name: true,
                 price: true,
+                disabled: true,
                 createdAt: true,
                 category: {
                     select: {

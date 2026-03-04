@@ -21,6 +21,7 @@ import { ListCategoryController } from './controllers/category/ListCategoryContr
 import { EditCategoryController } from './controllers/category/EditCategoryController';
 import { createProductController } from './controllers/product/CreateProductController';
 import { ListProductController } from './controllers/product/ListProductController';
+import { DeleteProductController } from './controllers/product/DeleteProductController';
 
 const router = Router();
 const upload = multer(multerConfig);
@@ -63,4 +64,10 @@ router.post("/product",
     new createProductController().handle);//rota para criar produtos, quando chegar uma requisição do tipo POST para a rota /product, o router vai chamar o método handle do createProductController
 
 router.get("/products", isAuthenticated, new ListProductController().handle);//rota para listar produtos, quando chegar uma requisição do tipo GET para a rota /products, o router vai chamar o método handle do ListProductController
+
+router.post("/product/delete",
+    isAuthenticated,
+    isAdmin,
+    new DeleteProductController().handle);//rota para deletar produtos, quando chegar uma requisição do tipo POST para a rota /product/delete, o router vai chamar o método handle do DeleteProductController
+
 export { router };
