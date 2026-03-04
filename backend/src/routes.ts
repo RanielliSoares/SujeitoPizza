@@ -8,7 +8,12 @@ import { Router, Request, Response } from 'express';
 import { CreateUserController } from './controllers/user/CreateUserController';
 import { validateSchema } from './middlewares/validateSchema';
 import { createUserSchema, authUserSchema } from './schemas/UserSchema';
+import { createCategorySchema } from './schemas/CategorySchema';
 import { AuthUserController } from './controllers/user/AuthUserController';
+import { DetailUserController } from './controllers/user/DetailUserController';
+import { isAuthenticated } from './middlewares/isAuthenticated';
+import { CreateCategoryController } from './controllers/category/CreateCategoryController';
+import { isAdmin } from './middlewares/isAdmin';
 
 const router = Router();
 // Rotas Usuario
@@ -22,4 +27,8 @@ router.post(
     validateSchema(authUserSchema),
     new AuthUserController().handle);//rota para autenticar usuários, quando chegar uma requisição do tipo POST para a rota /session, o router vai chamar o método handle do AuthUserController
 
+router.get("/me", isAuthenticated, new DetailUserController().handle);//rota para pegar os detalhes do usuário logado, quando chegar uma requisição do tipo GET para a rota /me, o router vai chamar o método handle do DetailUserController
 export { router };
+
+//rotas category
+router.post("/category", validateSchema(createCategorySchema), isAuthenticated, isAdmin, new CreateCategoryController().handle);
