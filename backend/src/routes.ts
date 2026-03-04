@@ -20,6 +20,7 @@ import { isAdmin } from './middlewares/isAdmin';
 import { ListCategoryController } from './controllers/category/ListCategoryController';
 import { EditCategoryController } from './controllers/category/EditCategoryController';
 import { createProductController } from './controllers/product/CreateProductController';
+import { ListProductController } from './controllers/product/ListProductController';
 
 const router = Router();
 const upload = multer(multerConfig);
@@ -61,4 +62,5 @@ router.post("/product",
     validateSchema(createProductSchema),
     new createProductController().handle);//rota para criar produtos, quando chegar uma requisição do tipo POST para a rota /product, o router vai chamar o método handle do createProductController
 
+router.get("/products", isAuthenticated, new ListProductController().handle);//rota para listar produtos, quando chegar uma requisição do tipo GET para a rota /products, o router vai chamar o método handle do ListProductController
 export { router };
