@@ -11,7 +11,7 @@ import { CreateUserController } from './controllers/user/CreateUserController';
 import { validateSchema } from './middlewares/validateSchema';
 import { createUserSchema, authUserSchema } from './schemas/UserSchema';
 import { createCategorySchema, updateCategorySchema } from './schemas/CategorySchema';
-import { createProductSchema } from './schemas/ProductSchema';
+import { createProductSchema, listProductsCategorySchema } from './schemas/ProductSchema';
 import { AuthUserController } from './controllers/user/AuthUserController';
 import { DetailUserController } from './controllers/user/DetailUserController';
 import { isAuthenticated } from './middlewares/isAuthenticated';
@@ -71,5 +71,5 @@ router.post("/product/delete",
     isAdmin,
     new DeleteProductController().handle);//rota para deletar produtos, quando chegar uma requisição do tipo POST para a rota /product/delete, o router vai chamar o método handle do DeleteProductController
 
-router.get("/products/category", isAuthenticated, new ListProductCategoryController().handle);//rota para listar produtos por categoria, quando chegar uma requisição do tipo GET para a rota /products/category, o router vai chamar o método handle do ListProductCategoryController
+router.get("/products/category", isAuthenticated, validateSchema(listProductsCategorySchema), new ListProductCategoryController().handle);//rota para listar produtos por categoria, quando chegar uma requisição do tipo GET para a rota /products/category, o router vai chamar o método handle do ListProductCategoryController
 export { router };

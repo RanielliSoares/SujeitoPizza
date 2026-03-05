@@ -10,3 +10,12 @@ export const createProductSchema = z.object({
     query: z.object({}).optional(),
     params: z.object({}).optional(),
 })
+
+export const listProductsCategorySchema = z.object({
+    body: z.object({
+        category_id: z.string({ message: "O id da categoria precisa ser um texto" }),
+    }),
+    query: z.object({}).optional(),
+    params: z.object({}).optional(),
+
+})
